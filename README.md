@@ -1,0 +1,2 @@
+# vscode-github-markdown-preview
+MarkdownとmarmaidをGitHubのように綺麗に表示するVSCode拡張
