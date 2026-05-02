@@ -1,0 +1,32 @@
+{
+  "name": "vscode-github-markdown-preview",
+  "displayName": "GitHub Markdown Preview",
+  "description": "Render Mermaid diagrams in VS Code's built-in Markdown preview with GitHub-like styling.",
+  "version": "0.0.1",
+  "publisher": "ascreit",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "contributes": {
+    "markdown.previewScripts": [
+      "./media/mermaid.min.js",
+      "./media/preview.js"
+    ],
+    "markdown.previewStyles": [
+      "./media/preview.css"
+    ]
+  },
+  "scripts": {
+    "package": "vsce package --allow-missing-repository",
+    "install:local": "code --install-extension vscode-github-markdown-preview-0.0.1.vsix --force"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.1",
+    "mermaid": "^11.12.0"
+  }
+}
