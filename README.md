@@ -1,4 +1,4 @@
-# GitHub Markdown Preview
+# GitHub Mermaid Markdown Preview
 
 VS Code / Cursor の標準Markdown Previewで、MermaidをGitHubに近い見た目で表示するための拡張です。
 
@@ -56,7 +56,7 @@ Marketplace公開後は、以下のリンクからVS Codeの拡張機能イン�
 VS Codeの拡張機能ビューから検索する場合は、以下で検索してください。
 
 ```text
-GitHub Markdown Preview
+GitHub Mermaid Markdown Preview
 ```
 
 Marketplace公開前に試す場合は、VSIXを作成してインストールします。
