@@ -5,14 +5,45 @@
   "version": "0.0.1",
   "publisher": "ascreit",
   "license": "MIT",
+  "main": "./extension.js",
   "engines": {
     "vscode": "^1.92.0"
   },
+  "activationEvents": [
+    "onCommand:githubMarkdownPreview.showPreview",
+    "onCommand:githubMarkdownPreview.showMarkdown"
+  ],
   "categories": [
     "Other",
     "Visualization"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "githubMarkdownPreview.showPreview",
+        "title": "Preview",
+        "category": "GitHub Markdown Preview"
+      },
+      {
+        "command": "githubMarkdownPreview.showMarkdown",
+        "title": "Markdown",
+        "category": "GitHub Markdown Preview"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "githubMarkdownPreview.showPreview",
+          "when": "resourceLangId == markdown && activeWebviewPanelId != 'markdown.preview'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "githubMarkdownPreview.showMarkdown",
+          "when": "activeWebviewPanelId == 'markdown.preview' || activeCustomEditorId == 'vscode.markdown.preview.editor'",
+          "group": "navigation@1"
+        }
+      ]
+    },
     "markdown.previewScripts": [
       "./media/mermaid.min.js",
       "./media/preview.js"

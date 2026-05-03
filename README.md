@@ -2,7 +2,7 @@
 
 VS Code / Cursor の標準Markdown Previewで、MermaidをGitHubに近い見た目で表示するための拡張です。
 
-Markdownファイルを普通に開き、エディタ右上の `Preview` ボタンまたは標準コマンド `Markdown: Open Preview` を実行すると、この拡張が標準プレビューへCSSとスクリプトを追加します。専用ビューや専用コマンドを開く必要はありません。
+Markdownファイルを普通に開き、エディタ右上の `Preview` ボタンまたは標準コマンド `Markdown: Open Preview` を実行すると、この拡張が標準プレビューへCSSとスクリプトを追加します。
 
 ## 目的
 
@@ -14,6 +14,8 @@ VS Code標準のMarkdown Previewでは、Mermaid図の見た目がGitHub上の�
 
 1. Markdownファイルを開く
 2. エディタ右上の `Preview` ボタンを押す
+
+Markdownソースからプレビューへ切り替える場合は、エディタ右上の `Preview` ボタンを押します。プレビューから元のMarkdownへ戻る場合は、プレビュータブ右上の `Markdown` ボタンを押します。
 
 コマンドパレットから開く場合は、以下でも同じです。
 
@@ -73,7 +75,8 @@ Cursorや別のVS Code互換エディタを使っている場合、ターミナ�
 - `media/preview.js`: Markdown Preview内の `mermaid` code block をMermaid SVGへ変換する
 - `media/preview.css`: Markdown PreviewとMermaid表示の見た目を整える
 - `media/mermaid.min.js`: Preview内で使うMermaid本体
-- `package.json`: Markdown Previewへの貢献設定
+- `extension.js`: `Preview` / `Markdown` 切り替えコマンド
+- `package.json`: Markdown Previewとコマンドへの貢献設定
 
 開発用ウィンドウで確認するには、Cursor / VS Codeでこのリポジトリを開いて `F5` または `Debug: Start Debugging` を実行します。
 
