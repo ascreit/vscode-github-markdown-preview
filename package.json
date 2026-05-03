@@ -53,8 +53,8 @@
     ]
   },
   "scripts": {
-    "compile": "tsc -p .",
-    "check": "npm run compile && node --check media/preview.js",
+    "compile": "tsc -p tsconfig.extension.json && tsc -p tsconfig.preview.json",
+    "check": "tsc -p . && npm run compile && node --check extension.js && node --check media/preview.js",
     "package": "vsce package --allow-missing-repository",
     "vscode:prepublish": "npm run compile",
     "install:local": "code --install-extension vscode-github-markdown-preview-0.0.1.vsix --force"

@@ -76,7 +76,9 @@ Cursorや別のVS Code互換エディタを使っている場合、ターミナ�
 - `media/preview.css`: Markdown PreviewとMermaid表示の見た目を整える
 - `media/mermaid.min.js`: Preview内で使うMermaid本体
 - `src/extension.ts`: `Preview` / `Markdown` 切り替えコマンドのTypeScriptソース
+- `src/preview.ts`: Markdown Preview内で実行されるブラウザ側スクリプトのTypeScriptソース
 - `extension.js`: TypeScriptから生成される拡張ホスト用エントリポイント
+- `media/preview.js`: TypeScriptから生成されるMarkdown Preview注入スクリプト
 - `package.json`: Markdown Previewとコマンドへの貢献設定
 
 開発用ウィンドウで確認するには、Cursor / VS Codeでこのリポジトリを開いて `F5` または `Debug: Start Debugging` を実行します。

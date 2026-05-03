@@ -2,7 +2,8 @@
 .gitignore
 src/**
 out/**
-tsconfig.json
+tsconfig*.json
+*.tsbuildinfo
 node_modules/**
 package-lock.json
 *.vsix
