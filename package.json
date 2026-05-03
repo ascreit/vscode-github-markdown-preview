@@ -76,7 +76,7 @@
     "check": "tsc -p . && npm run compile && node --check extension.js && node --check media/preview.js",
     "package": "vsce package --allow-missing-repository",
     "vscode:prepublish": "npm run compile",
-    "install:local": "code --install-extension vscode-github-markdown-preview-0.0.1.vsix --force"
+    "install:local": "code --install-extension vscode-github-markdown-preview-${npm_package_version}.vsix --force"
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
