@@ -15,17 +15,6 @@
     callback();
   }
 
-  function showDebugBadge() {
-    if (document.querySelector('.github-markdown-preview-debug-badge')) {
-      return;
-    }
-
-    const badge = document.createElement('div');
-    badge.className = 'github-markdown-preview-debug-badge';
-    badge.textContent = 'GitHub Markdown Preview extension active';
-    document.body.append(badge);
-  }
-
   function getMermaidBlocks() {
     return Array.from(document.querySelectorAll('pre > code.language-mermaid, pre > code.lang-mermaid'));
   }
@@ -178,6 +167,7 @@
     const graph = document.createElement('div');
     graph.className = 'diagram-dialog-graph';
     const clonedSvg = svg.cloneNode(true);
+    rewriteSvgIds(clonedSvg, `github-markdown-preview-dialog-${Date.now()}`);
     graph.append(clonedSvg);
     canvas.append(graph);
     viewport.append(canvas);
@@ -294,6 +284,74 @@
     return Number.isFinite(parsed) ? parsed : undefined;
   }
 
+  function rewriteSvgIds(svg, prefix) {
+    const idMap = new Map();
+    const elementsWithIds = [
+      ...(svg.id ? [svg] : []),
+      ...Array.from(svg.querySelectorAll('[id]'))
+    ];
+
+    for (const element of elementsWithIds) {
+      const id = element.id;
+
+      if (!id) {
+        continue;
+      }
+
+      const nextId = `${prefix}-${id}`;
+      idMap.set(id, nextId);
+      element.id = nextId;
+    }
+
+    if (!idMap.size) {
+      return;
+    }
+
+    const attributes = [
+      'clip-path',
+      'fill',
+      'filter',
+      'href',
+      'marker-end',
+      'marker-mid',
+      'marker-start',
+      'mask',
+      'stroke',
+      'style',
+      'xlink:href'
+    ];
+    const allElements = [svg, ...Array.from(svg.querySelectorAll('*'))];
+
+    for (const element of allElements) {
+      for (const attribute of attributes) {
+        const value = element.getAttribute(attribute);
+
+        if (!value) {
+          continue;
+        }
+
+        element.setAttribute(attribute, replaceSvgIdReferences(value, idMap));
+      }
+    }
+  }
+
+  function replaceSvgIdReferences(value, idMap) {
+    let nextValue = value;
+
+    for (const [id, nextId] of idMap) {
+      const escapedId = escapeRegExp(id);
+      nextValue = nextValue
+        .replace(new RegExp(`url\\(#${escapedId}\\)`, 'g'), `url(#${nextId})`)
+        .replace(new RegExp(`#${escapedId}(?=\\b|["')\\s;])`, 'g'), `#${nextId}`);
+    }
+
+    return nextValue;
+  }
+
+  function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
   function showLoadErrors(message) {
     for (const code of getMermaidBlocks()) {
       const pre = code.parentElement;
@@ -312,7 +370,6 @@
   }
 
   ready(() => {
-    showDebugBadge();
     renderMermaidBlocks();
 
     const observer = new MutationObserver(() => {

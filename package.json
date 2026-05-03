@@ -34,7 +34,7 @@
       "editor/title": [
         {
           "command": "githubMarkdownPreview.showPreview",
-          "when": "resourceLangId == markdown && activeWebviewPanelId != 'markdown.preview'",
+          "when": "resourceLangId == markdown && activeWebviewPanelId != 'markdown.preview' && activeCustomEditorId != 'vscode.markdown.preview.editor'",
           "group": "navigation@1"
         },
         {
