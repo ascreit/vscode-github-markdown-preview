@@ -1,6 +1,6 @@
 {
   "name": "vscode-github-markdown-preview",
-  "displayName": "GitHub Mermaid Markdown Preview",
+  "displayName": "Ascreit Mermaid Markdown Preview",
   "description": "Render Mermaid diagrams in VS Code's built-in Markdown preview with GitHub-like styling.",
   "version": "0.0.1",
   "publisher": "ascreit",
