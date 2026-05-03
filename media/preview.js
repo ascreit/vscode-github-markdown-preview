@@ -5,6 +5,7 @@
     const minZoom = 0.25;
     const maxZoom = 4;
     let isRendering = false;
+    let shouldRenderAgain = false;
     let activeDialog = undefined;
     const globalScope = globalThis;
     function ready(callback) {
@@ -33,16 +34,16 @@
     }
     async function renderMermaidBlocks() {
         if (isRendering) {
+            shouldRenderAgain = true;
             return;
         }
         isRendering = true;
-        const mermaid = await waitForMermaid();
-        if (!mermaid) {
-            showLoadErrors('Mermaid library was not loaded.');
-            isRendering = false;
-            return;
-        }
         try {
+            const mermaid = await waitForMermaid();
+            if (!mermaid) {
+                showLoadErrors('Mermaid library was not loaded.');
+                return;
+            }
             mermaid.initialize({
                 startOnLoad: false,
                 securityLevel: 'strict',
@@ -93,6 +94,10 @@
         }
         finally {
             isRendering = false;
+            if (shouldRenderAgain) {
+                shouldRenderAgain = false;
+                void renderMermaidBlocks();
+            }
         }
     }
     function createPanel() {

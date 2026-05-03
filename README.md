@@ -1,5 +1,10 @@
 # Ascreit Mermaid Markdown Preview
 
+[![Visual Studio Marketplace Version](https://vsmarketplacebadges.dev/version-short/ascreit.vscode-github-markdown-preview.svg)](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
+[![Visual Studio Marketplace Installs](https://vsmarketplacebadges.dev/installs-short/ascreit.vscode-github-markdown-preview.svg)](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
+[![Visual Studio Marketplace Rating](https://vsmarketplacebadges.dev/rating-star/ascreit.vscode-github-markdown-preview.svg)](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
+[![License](https://img.shields.io/github/license/ascreit/vscode-github-markdown-preview)](LICENSE)
+
 VS Code / Cursor の標準Markdown Previewで、MermaidをGitHubに近い見た目で表示するための拡張です。
 
 [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
@@ -40,28 +45,13 @@ flowchart TD
 ```
 ````
 
-動作確認には以下のファイルを使えます。
-
-```text
-examples/mermaid.md
-```
-
 ## インストール
 
 Marketplaceからインストールできます。
 
 [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
 
-VS Codeの拡張機能画面を直接開く場合は、以下のURIをブラウザのアドレスバーに貼り付けてください。
-GitHub READMEでは `vscode:` URIがリンク化されないため、コピー用として記載しています。
-
-```text
-vscode:extension/ascreit.vscode-github-markdown-preview
-```
-
 コマンドパレットからインストールする場合は、`Extensions: Install Extensions` を開いて以下を検索してください。
-
-VS Codeの拡張機能ビューから検索する場合は、以下で検索してください。
 
 ```text
 Ascreit Mermaid Markdown Preview
@@ -71,82 +61,4 @@ Ascreit Mermaid Markdown Preview
 
 ```text
 ascreit.vscode-github-markdown-preview
-```
-
-ローカルのVSIXから試す場合は、VSIXを作成してインストールします。
-
-```bash
-npm install
-npm run package
-```
-
-成功すると、以下のようなファイルが作成されます。
-
-```text
-vscode-github-markdown-preview-0.0.2.vsix
-```
-
-VS Code / Cursor で以下を実行します。
-
-1. `Cmd + Shift + P` でコマンドパレットを開く
-2. `Extensions: Install from VSIX...` を実行する
-3. 作成された `.vsix` ファイルを選ぶ
-4. `Developer: Reload Window` を実行する
-
-Cursorや別のVS Code互換エディタを使っている場合、ターミナルの `code --install-extension` は通常のVS Codeへインストールされることがあります。その場合は、実際に使うエディタ上で `Extensions: Install from VSIX...` を実行してください。
-
-## Marketplace公開
-
-Marketplaceへの公開は `ascreit.vscode-github-markdown-preview` として行います。
-新しいバージョンを公開する場合は、`package.json` の `version` を上げてから公開します。
-
-```bash
-npm install
-npm run check
-npm run package
-npm version patch
-npx vsce login ascreit
-npx vsce publish
-```
-
-公開済みのMarketplace URLとVS Code URIは以下です。
-
-```text
-https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview
-vscode:extension/ascreit.vscode-github-markdown-preview
-```
-
-## 開発
-
-この拡張は、VS Codeの `markdown.previewScripts` と `markdown.previewStyles` によって標準Markdown Previewへ処理を追加します。
-
-主なファイルは以下です。
-
-- `src/extension.ts`: `Preview` / `Markdown` 切り替えコマンドのTypeScriptソース
-- `src/preview.ts`: Markdown Preview内で実行されるブラウザ側スクリプトのTypeScriptソース
-- `extension.js`: TypeScriptから生成される拡張ホスト用エントリポイント
-- `media/preview.js`: TypeScriptから生成されるMarkdown Preview注入スクリプト
-- `media/preview.css`: Markdown PreviewとMermaid表示の見た目を整える
-- `media/mermaid.min.js`: Preview内で使うMermaid本体
-- `package.json`: Markdown Previewとコマンドへの貢献設定
-
-開発用ウィンドウで確認するには、Cursor / VS Codeでこのリポジトリを開いて `F5` または `Debug: Start Debugging` を実行します。
-
-`Extension Development Host` が開いたら、`examples/mermaid.md` を開いて標準のMarkdown Previewを表示してください。
-
-TypeScriptソースを確認するには以下を実行します。
-
-```bash
-npm run check
-```
-
-## Mermaidの更新
-
-`media/mermaid.min.js` は `mermaid` npm package のビルド済みファイルを同梱しています。
-
-Mermaidを更新する場合は、`package.json` の `mermaid` バージョンを更新したあと、以下を実行して同梱ファイルを更新してください。
-
-```bash
-npm install
-cp node_modules/mermaid/dist/mermaid.min.js media/mermaid.min.js
 ```
