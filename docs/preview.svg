@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub Markdown Preview screenshot</title>
+  <desc id="desc">A VS Code Markdown Preview tab rendering a large Mermaid sequence diagram with an expand control.</desc>
+  <rect width="1440" height="900" fill="#1e1e1e"/>
+  <rect y="0" width="1440" height="48" fill="#181818"/>
+  <rect x="0" y="0" width="260" height="48" fill="#252526"/>
+  <rect x="0" y="0" width="260" height="2" fill="#3794ff"/>
+  <text x="18" y="31" fill="#d4d4d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18" font-weight="600">▣ Preview mermaid.md</text>
+  <text x="1306" y="31" fill="#d4d4d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18" font-weight="600">Markdown</text>
+  <text x="1374" y="31" fill="#a6a6a6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">◫ ⋯</text>
+
+  <g transform="translate(160 106)">
+    <text x="0" y="44" fill="#d4d4d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="42" font-weight="700">Mermaid Preview Test</text>
+    <line x1="0" y1="70" x2="1120" y2="70" stroke="#3c3c3c" stroke-width="2"/>
+    <text x="0" y="126" fill="#d4d4d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="600">標準Markdown Previewで、Mermaid図をGitHubに近い見た目で表示します。</text>
+    <text x="0" y="184" fill="#d4d4d4" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="600">大きな図は右上の拡大ボタンから、ズーム・スクロールできます。</text>
+
+    <g transform="translate(0 240)">
+      <rect width="1120" height="470" rx="6" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <rect x="1068" y="12" width="38" height="38" rx="6" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <path d="M1079 23h10v4h-4l8 8-3 3-8-8v4h-4V23Zm17 0h10v11h-4v-4l-8 8-3-3 8-8h-4v-4Zm-14 29h4v4l8-8 3 3-8 8h4v4h-11V52Zm20-4h4v11h-11v-4h4l-8-8 3-3 8 8v-4Z" fill="#57606a"/>
+
+      <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans JP, sans-serif">
+        <g fill="#f4f0ff" stroke="#9b7cff" stroke-width="1.4">
+          <rect x="170" y="44" width="92" height="34" rx="2"/>
+          <rect x="335" y="44" width="92" height="34" rx="2"/>
+          <rect x="500" y="44" width="92" height="34" rx="2"/>
+          <rect x="665" y="44" width="92" height="34" rx="2"/>
+          <rect x="830" y="44" width="92" height="34" rx="2"/>
+        </g>
+        <g fill="#24292f" font-size="13" font-weight="600" text-anchor="middle">
+          <text x="216" y="66">カタログ画面</text>
+          <text x="381" y="66">カート</text>
+          <text x="546" y="66">注文受付</text>
+          <text x="711" y="66">在庫確認</text>
+          <text x="876" y="66">配送担当</text>
+        </g>
+
+        <g stroke="#d8c8ff" stroke-width="1.4">
+          <line x1="216" y1="78" x2="216" y2="430"/>
+          <line x1="381" y1="78" x2="381" y2="430"/>
+          <line x1="546" y1="78" x2="546" y2="430"/>
+          <line x1="711" y1="78" x2="711" y2="430"/>
+          <line x1="876" y1="78" x2="876" y2="430"/>
+        </g>
+
+        <g stroke="#24292f" stroke-width="1.6" fill="none" marker-end="url(#arrow)">
+          <line x1="70" y1="118" x2="214" y2="118"/>
+          <line x1="216" y1="158" x2="708" y2="158"/>
+          <line x1="711" y1="198" x2="218" y2="198" stroke-dasharray="5 4"/>
+          <line x1="70" y1="320" x2="379" y2="320"/>
+          <line x1="381" y1="362" x2="544" y2="362"/>
+          <line x1="546" y1="404" x2="874" y2="404"/>
+        </g>
+
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#24292f"/>
+          </marker>
+        </defs>
+
+        <g fill="#24292f" font-size="15" font-weight="600">
+          <text x="92" y="108">1. 文具セットを検索する</text>
+          <text x="395" y="148">2. 商品候補と在庫を問い合わせる</text>
+          <text x="395" y="188">3. 候補を返す</text>
+          <text x="88" y="310">5. ノートを追加する</text>
+          <text x="430" y="352">10. 注文内容を送信する</text>
+          <text x="620" y="394">23. 梱包済みの箱を引き渡す</text>
+        </g>
+
+        <rect x="70" y="228" width="820" height="34" fill="#fff8b8" stroke="#8c8c52" stroke-width="1.4"/>
+        <text x="480" y="251" fill="#24292f" font-size="17" font-weight="700" text-anchor="middle">利用者は複数の商品を比較しながら、必要な文具をまとめて選ぶ</text>
+      </g>
+    </g>
+  </g>
+</svg>

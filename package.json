@@ -5,6 +5,25 @@
   "version": "0.0.1",
   "publisher": "ascreit",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ascreit/vscode-github-markdown-preview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ascreit/vscode-github-markdown-preview/issues"
+  },
+  "homepage": "https://github.com/ascreit/vscode-github-markdown-preview#readme",
+  "keywords": [
+    "markdown",
+    "preview",
+    "mermaid",
+    "github",
+    "diagram"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
   "main": "./extension.js",
   "engines": {
     "vscode": "^1.92.0"
