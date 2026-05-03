@@ -75,12 +75,19 @@ Cursorや別のVS Code互換エディタを使っている場合、ターミナ�
 - `media/preview.js`: Markdown Preview内の `mermaid` code block をMermaid SVGへ変換する
 - `media/preview.css`: Markdown PreviewとMermaid表示の見た目を整える
 - `media/mermaid.min.js`: Preview内で使うMermaid本体
-- `extension.js`: `Preview` / `Markdown` 切り替えコマンド
+- `src/extension.ts`: `Preview` / `Markdown` 切り替えコマンドのTypeScriptソース
+- `extension.js`: TypeScriptから生成される拡張ホスト用エントリポイント
 - `package.json`: Markdown Previewとコマンドへの貢献設定
 
 開発用ウィンドウで確認するには、Cursor / VS Codeでこのリポジトリを開いて `F5` または `Debug: Start Debugging` を実行します。
 
 `Extension Development Host` が開いたら、`examples/mermaid.md` を開いて標準のMarkdown Previewを表示してください。
+
+TypeScriptソースを確認するには以下を実行します。
+
+```bash
+npm run check
+```
 
 ## Mermaidの更新
 

@@ -333,6 +333,12 @@
         element.setAttribute(attribute, replaceSvgIdReferences(value, idMap));
       }
     }
+
+    for (const style of Array.from(svg.querySelectorAll('style'))) {
+      if (style.textContent) {
+        style.textContent = replaceSvgIdReferences(style.textContent, idMap);
+      }
+    }
   }
 
   function replaceSvgIdReferences(value, idMap) {
@@ -341,8 +347,8 @@
     for (const [id, nextId] of idMap) {
       const escapedId = escapeRegExp(id);
       nextValue = nextValue
-        .replace(new RegExp(`url\\(#${escapedId}\\)`, 'g'), `url(#${nextId})`)
-        .replace(new RegExp(`#${escapedId}(?=\\b|["')\\s;])`, 'g'), `#${nextId}`);
+        .replace(new RegExp(`url\\((['"]?)#${escapedId}\\1\\)`, 'g'), `url($1#${nextId}$1)`)
+        .replace(new RegExp(`#${escapedId}(?=[\\s"'();{},.:#>+~\\[]|$)`, 'g'), `#${nextId}`);
     }
 
     return nextValue;
