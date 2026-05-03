@@ -2,8 +2,7 @@
 
 VS Code / Cursor の標準Markdown Previewで、MermaidをGitHubに近い見た目で表示するための拡張です。
 
-[Install in VS Code](vscode:extension/ascreit.vscode-github-markdown-preview)  
-[Open in Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
+[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
 
 ![Ascreit Mermaid Markdown PreviewでMermaid図を表示した画面](docs/preview.png)
 
@@ -49,14 +48,29 @@ examples/mermaid.md
 
 ## インストール
 
-以下のリンクからVS Codeの拡張機能インストール画面を開けます。
+Marketplaceからインストールできます。
 
-[Install in VS Code](vscode:extension/ascreit.vscode-github-markdown-preview)
+[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
+
+VS Codeの拡張機能画面を直接開く場合は、以下のURIをブラウザのアドレスバーに貼り付けてください。
+GitHub READMEでは `vscode:` URIがリンク化されないため、コピー用として記載しています。
+
+```text
+vscode:extension/ascreit.vscode-github-markdown-preview
+```
+
+コマンドパレットからインストールする場合は、`Extensions: Install Extensions` を開いて以下を検索してください。
 
 VS Codeの拡張機能ビューから検索する場合は、以下で検索してください。
 
 ```text
 Ascreit Mermaid Markdown Preview
+```
+
+拡張IDで検索する場合は以下です。
+
+```text
+ascreit.vscode-github-markdown-preview
 ```
 
 ローカルのVSIXから試す場合は、VSIXを作成してインストールします。
