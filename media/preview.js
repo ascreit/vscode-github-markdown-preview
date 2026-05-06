@@ -7,6 +7,7 @@
     let isRendering = false;
     let shouldRenderAgain = false;
     let activeDialog = undefined;
+    let dialogCleanup = undefined;
     const globalScope = globalThis;
     function ready(callback) {
         if (document.readyState === 'loading') {
@@ -196,9 +197,22 @@
         surface.addEventListener('click', event => {
             event.stopPropagation();
         });
-        dialog.addEventListener('click', event => {
-            if (event.target === dialog) {
+        surface.addEventListener('dblclick', event => {
+            event.stopPropagation();
+        });
+        let dialogPointerDownId = undefined;
+        dialog.addEventListener('pointerdown', event => {
+            dialogPointerDownId = event.target === dialog ? event.pointerId : undefined;
+        });
+        dialog.addEventListener('pointerup', event => {
+            if (event.pointerId === dialogPointerDownId && event.target === dialog) {
                 closeDiagramDialog();
+            }
+            dialogPointerDownId = undefined;
+        });
+        dialog.addEventListener('pointercancel', event => {
+            if (event.pointerId === dialogPointerDownId) {
+                dialogPointerDownId = undefined;
             }
         });
         dialog.addEventListener('keydown', event => {
@@ -225,6 +239,104 @@
             const scaleFactor = Math.exp(-event.deltaY * 0.01);
             setZoom(zoom * scaleFactor, origin);
         }, { passive: false });
+        let activePanPointerId = undefined;
+        let isCtrlDown = false;
+        let panStartX = 0;
+        let panStartY = 0;
+        let panScrollLeft = 0;
+        let panScrollTop = 0;
+        function onDocumentKeyDown(event) {
+            if (event.key === 'Control' && !isCtrlDown) {
+                isCtrlDown = true;
+                if (activePanPointerId === undefined) {
+                    viewport.classList.add('diagram-dialog-viewport--grab');
+                }
+            }
+        }
+        function onDocumentKeyUp(event) {
+            if (event.key === 'Control') {
+                isCtrlDown = false;
+                stopPan();
+                viewport.classList.remove('diagram-dialog-viewport--grab');
+            }
+        }
+        function onViewportPointerDown(event) {
+            if (!isCtrlDown || event.button !== 0 || activePanPointerId !== undefined) {
+                return;
+            }
+            activePanPointerId = event.pointerId;
+            panStartX = event.clientX;
+            panStartY = event.clientY;
+            panScrollLeft = viewport.scrollLeft;
+            panScrollTop = viewport.scrollTop;
+            viewport.classList.remove('diagram-dialog-viewport--grab');
+            viewport.classList.add('diagram-dialog-viewport--grabbing');
+            viewport.setPointerCapture(event.pointerId);
+            event.preventDefault();
+        }
+        function onViewportPointerMove(event) {
+            if (event.pointerId !== activePanPointerId) {
+                return;
+            }
+            if (!isPointerInsideViewport(event)) {
+                stopPan();
+                return;
+            }
+            viewport.scrollLeft = panScrollLeft - (event.clientX - panStartX);
+            viewport.scrollTop = panScrollTop - (event.clientY - panStartY);
+        }
+        function onViewportPointerUp(event) {
+            if (event.pointerId !== activePanPointerId) {
+                return;
+            }
+            stopPan();
+        }
+        function onViewportPointerCancel(event) {
+            if (event.pointerId === activePanPointerId) {
+                stopPan();
+            }
+        }
+        function onWindowBlur() {
+            isCtrlDown = false;
+            stopPan();
+            viewport.classList.remove('diagram-dialog-viewport--grab');
+        }
+        function stopPan() {
+            if (activePanPointerId === undefined) {
+                return;
+            }
+            if (viewport.hasPointerCapture(activePanPointerId)) {
+                viewport.releasePointerCapture(activePanPointerId);
+            }
+            activePanPointerId = undefined;
+            viewport.classList.remove('diagram-dialog-viewport--grabbing');
+            if (isCtrlDown) {
+                viewport.classList.add('diagram-dialog-viewport--grab');
+            }
+        }
+        function isPointerInsideViewport(event) {
+            const rect = viewport.getBoundingClientRect();
+            return (event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom);
+        }
+        document.addEventListener('keydown', onDocumentKeyDown);
+        document.addEventListener('keyup', onDocumentKeyUp);
+        viewport.addEventListener('pointerdown', onViewportPointerDown);
+        viewport.addEventListener('pointermove', onViewportPointerMove);
+        viewport.addEventListener('pointerup', onViewportPointerUp);
+        viewport.addEventListener('pointercancel', onViewportPointerCancel);
+        window.addEventListener('blur', onWindowBlur);
+        dialogCleanup = () => {
+            document.removeEventListener('keydown', onDocumentKeyDown);
+            document.removeEventListener('keyup', onDocumentKeyUp);
+            viewport.removeEventListener('pointerdown', onViewportPointerDown);
+            viewport.removeEventListener('pointermove', onViewportPointerMove);
+            viewport.removeEventListener('pointerup', onViewportPointerUp);
+            viewport.removeEventListener('pointercancel', onViewportPointerCancel);
+            window.removeEventListener('blur', onWindowBlur);
+        };
         setZoom(computeFitZoom());
         closeButton.focus();
     }
@@ -242,6 +354,8 @@
         if (!activeDialog) {
             return;
         }
+        dialogCleanup?.();
+        dialogCleanup = undefined;
         activeDialog.remove();
         activeDialog = undefined;
     }

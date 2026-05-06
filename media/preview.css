@@ -301,6 +301,15 @@ body {
   background: #f6f8fa;
 }
 
+.diagram-dialog-viewport--grab {
+  cursor: grab;
+}
+
+.diagram-dialog-viewport--grabbing {
+  cursor: grabbing;
+  user-select: none;
+}
+
 .diagram-dialog-zoom-label {
   min-width: 44px;
   color: #57606a;
