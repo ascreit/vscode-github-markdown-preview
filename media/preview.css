@@ -239,6 +239,7 @@ body {
   min-height: 0;
   padding: 56px;
   overflow: auto;
+  overscroll-behavior: contain;
   background: #ffffff;
 }
 

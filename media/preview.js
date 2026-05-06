@@ -1,8 +1,8 @@
 "use strict";
 (function () {
     const renderedAttribute = 'data-github-markdown-preview-rendered';
-    const zoomStep = 0.25;
-    const minZoom = 0.25;
+    const zoomFactor = 1.25;
+    const minZoom = 0.1;
     const maxZoom = 4;
     let isRendering = false;
     let shouldRenderAgain = false;
@@ -153,17 +153,17 @@
         const controls = document.createElement('div');
         controls.className = 'diagram-dialog-controls';
         const zoomOutButton = createDialogButton('-', 'Zoom out', () => {
-            setZoom(zoom - zoomStep);
+            setZoom(zoom / zoomFactor);
         });
         const zoomLabel = document.createElement('span');
         zoomLabel.className = 'diagram-dialog-zoom-label';
         const zoomInButton = createDialogButton('+', 'Zoom in', () => {
-            setZoom(zoom + zoomStep);
+            setZoom(zoom * zoomFactor);
         });
-        const resetButton = createDialogButton('100%', 'Reset zoom', () => {
-            setZoom(1);
+        const fitButton = createDialogButton('Fit', 'Fit width', () => {
+            setZoom(computeFitZoom());
         });
-        controls.append(zoomOutButton, zoomLabel, zoomInButton, resetButton);
+        controls.append(zoomOutButton, zoomLabel, zoomInButton, fitButton);
         surface.append(closeButton, viewport, controls);
         dialog.append(surface);
         document.body.append(dialog);
@@ -185,6 +185,17 @@
                 viewport.scrollTop = ((viewport.scrollTop + origin.y) * zoom / previousZoom) - origin.y;
             }
         }
+        function computeFitZoom() {
+            const computed = window.getComputedStyle(viewport);
+            const paddingX = Number.parseFloat(computed.paddingLeft) + Number.parseFloat(computed.paddingRight);
+            const availableWidth = Math.max(viewport.clientWidth - paddingX, 1);
+            return Math.min(1, availableWidth / naturalSize.width);
+        }
+        // プレビュー内のクリックは dialog の背景クリック判定に到達させない
+        // （プレビュー内ダブルクリックでダイアログが閉じる挙動を防ぐ）。
+        surface.addEventListener('click', event => {
+            event.stopPropagation();
+        });
         dialog.addEventListener('click', event => {
             if (event.target === dialog) {
                 closeDiagramDialog();
@@ -195,6 +206,12 @@
                 closeDiagramDialog();
             }
         });
+        // 背景部分でのホイール操作が親ページのスクロールに伝播するのを防ぐ。
+        dialog.addEventListener('wheel', event => {
+            if (event.target === dialog) {
+                event.preventDefault();
+            }
+        }, { passive: false });
         viewport.addEventListener('wheel', event => {
             if (!event.ctrlKey) {
                 return;
@@ -208,7 +225,7 @@
             const scaleFactor = Math.exp(-event.deltaY * 0.01);
             setZoom(zoom * scaleFactor, origin);
         }, { passive: false });
-        setZoom(1);
+        setZoom(computeFitZoom());
         closeButton.focus();
     }
     function createDialogButton(text, label, onClick) {
@@ -230,8 +247,8 @@
     }
     function getSvgSize(svg) {
         const viewBox = svg.viewBox && svg.viewBox.baseVal;
-        const width = parseSvgLength(svg.getAttribute('width')) || (viewBox && viewBox.width);
-        const height = parseSvgLength(svg.getAttribute('height')) || (viewBox && viewBox.height);
+        const width = (viewBox && viewBox.width) || parseSvgLength(svg.getAttribute('width'));
+        const height = (viewBox && viewBox.height) || parseSvgLength(svg.getAttribute('height'));
         return {
             width: Math.max(width || 640, 1),
             height: Math.max(height || 360, 1)
@@ -241,7 +258,11 @@
         if (!value) {
             return undefined;
         }
-        const parsed = Number.parseFloat(value);
+        const trimmed = value.trim();
+        if (trimmed.endsWith('%')) {
+            return undefined;
+        }
+        const parsed = Number.parseFloat(trimmed);
         return Number.isFinite(parsed) ? parsed : undefined;
     }
     function rewriteSvgIds(svg, prefix) {
