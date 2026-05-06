@@ -4,6 +4,7 @@
     const zoomFactor = 1.25;
     const minZoom = 0.1;
     const maxZoom = 4;
+    const panModifierKey = /Mac|iPhone|iPad|iPod/.test(navigator.platform) ? 'Meta' : 'Control';
     let isRendering = false;
     let shouldRenderAgain = false;
     let activeDialog = undefined;
@@ -240,28 +241,28 @@
             setZoom(zoom * scaleFactor, origin);
         }, { passive: false });
         let activePanPointerId = undefined;
-        let isCtrlDown = false;
+        let isPanModifierDown = false;
         let panStartX = 0;
         let panStartY = 0;
         let panScrollLeft = 0;
         let panScrollTop = 0;
         function onDocumentKeyDown(event) {
-            if (event.key === 'Control' && !isCtrlDown) {
-                isCtrlDown = true;
+            if (event.key === panModifierKey && !isPanModifierDown) {
+                isPanModifierDown = true;
                 if (activePanPointerId === undefined) {
                     viewport.classList.add('diagram-dialog-viewport--grab');
                 }
             }
         }
         function onDocumentKeyUp(event) {
-            if (event.key === 'Control') {
-                isCtrlDown = false;
+            if (event.key === panModifierKey) {
+                isPanModifierDown = false;
                 stopPan();
                 viewport.classList.remove('diagram-dialog-viewport--grab');
             }
         }
         function onViewportPointerDown(event) {
-            if (!isCtrlDown || event.button !== 0 || activePanPointerId !== undefined) {
+            if (!isPanModifierDown || event.button !== 0 || activePanPointerId !== undefined) {
                 return;
             }
             activePanPointerId = event.pointerId;
@@ -297,7 +298,7 @@
             }
         }
         function onWindowBlur() {
-            isCtrlDown = false;
+            isPanModifierDown = false;
             stopPan();
             viewport.classList.remove('diagram-dialog-viewport--grab');
         }
@@ -310,7 +311,7 @@
             }
             activePanPointerId = undefined;
             viewport.classList.remove('diagram-dialog-viewport--grabbing');
-            if (isCtrlDown) {
+            if (isPanModifierDown) {
                 viewport.classList.add('diagram-dialog-viewport--grab');
             }
         }

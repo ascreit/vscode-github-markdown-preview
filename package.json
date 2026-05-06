@@ -2,7 +2,7 @@
   "name": "vscode-github-markdown-preview",
   "displayName": "Ascreit Mermaid Markdown Preview",
   "description": "Render Mermaid diagrams in VS Code's built-in Markdown preview with GitHub-like styling.",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "publisher": "ascreit",
   "license": "MIT",
   "icon": "docs/icon.png",

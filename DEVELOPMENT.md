@@ -32,6 +32,23 @@ npm run package
 
 To test the VSIX locally, run `Extensions: Install from VSIX...` in VS Code or Cursor and select the generated `.vsix` file.
 
+## Release Versioning
+
+This project follows Semantic Versioning in the `major.minor.patch` format required by npm and VS Code Marketplace.
+
+- Use a patch release, such as `1.0.1`, for bug fixes, documentation corrections, packaging fixes, and small behavior fixes that do not add a user-visible capability.
+- Use a minor release, such as `1.1.0`, for user-visible feature additions, workflow improvements, new commands, new settings, or meaningful UI behavior improvements that keep existing usage compatible.
+- Use a major release, such as `2.0.0`, for breaking changes to commands, settings, documented behavior, supported VS Code versions, or expected Markdown/Mermaid rendering behavior.
+
+Before `1.0.0`, `0.x` releases may be used while the extension is still experimental. Publish `1.0.0` when the core user workflow is stable enough to support without intentionally breaking it in routine releases.
+
+For this extension, `1.0.0` means:
+
+- Mermaid diagrams render reliably in VS Code's built-in Markdown Preview.
+- The documented preview, expanded view, zoom, fit, pan, and close interactions work as described.
+- Marketplace metadata, README, icon, and changelog are release-ready.
+- Future changes are expected to preserve the current core workflow unless a new major version is planned.
+
 ## Updating Mermaid
 
 `media/mermaid.min.js` is copied from the `mermaid` npm package.

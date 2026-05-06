@@ -2,11 +2,13 @@
 
 All notable changes to this extension are documented in this file.
 
-## Unreleased
+## 1.0.0
 
 - Stopped the expanded diagram dialog from closing on double-clicks inside the preview.
 - Initialized the expanded diagram at a width-fit zoom so wide Mermaid diagrams are visible without manual zoom-out.
 - Lowered the minimum zoom to 10% and switched zoom buttons to a proportional 1.25x step.
+- Added modifier-drag panning in the expanded diagram preview: Cmd-drag on macOS and Ctrl-drag on Windows/Linux.
+- Added an English README and moved the Japanese README to `README.ja.md`.
 
 ## 0.0.3
 

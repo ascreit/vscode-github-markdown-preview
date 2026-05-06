@@ -5,59 +5,64 @@
 [![Visual Studio Marketplace Rating](https://vsmarketplacebadges.dev/rating-star/ascreit.vscode-github-markdown-preview.svg)](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
 [![License](https://img.shields.io/github/license/ascreit/vscode-github-markdown-preview)](LICENSE)
 
-VS Code / Cursor の標準Markdown Previewで、MermaidをGitHubに近い見た目で表示するための拡張です。
+[Japanese README](README.ja.md)
+
+This extension renders Mermaid diagrams in VS Code and Cursor's built-in Markdown Preview with GitHub-like styling.
 
 [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
 
-![Ascreit Mermaid Markdown PreviewでMermaid図を表示した画面](docs/preview.png)
+![Mermaid diagrams rendered by Ascreit Mermaid Markdown Preview](docs/preview.png)
 
-Markdownファイルを普通に開き、エディタ右上の `Preview` ボタンまたは標準コマンド `Markdown: Open Preview` を実行すると、この拡張が標準プレビューへCSSとスクリプトを追加します。
+Open a Markdown file and click the `Preview` button in the editor title bar, or run the built-in `Markdown: Open Preview` command. The extension adds CSS and scripts to the standard Markdown Preview.
 
-## できること
+## Features
 
-- Mermaid code block を標準Markdown Preview内でGitHub風に表示
-- 大きなMermaid図をプレビュー幅に収めて表示
-- 図の右上ボタンから拡大モーダルを開き、ズーム、スクロール、Macトラックパッドのピンチ操作で確認
-- MarkdownソースとPreviewをエディタ右上の `Preview` / `Markdown` ボタンで切り替え
+- Render Mermaid code blocks in the standard Markdown Preview with GitHub-like styling.
+- Fit large Mermaid diagrams to the preview width.
+- Open diagrams in an expanded dialog with fit-to-width display, zoom controls, and scrolling.
+- Use trackpad pinch zoom on macOS, or pan in the expanded dialog with `Cmd` + drag on macOS and `Ctrl` + drag on Windows/Linux.
+- Switch between Markdown source and preview from the `Preview` / `Markdown` buttons in the editor title bar.
 
-## 使い方
+## Usage
 
-1. Markdownファイルを開く
-2. エディタ右上の `Preview` ボタンを押す
-3. Mermaid図を大きく見たい場合は、図の右上にある拡大ボタンを押す
+1. Open a Markdown file.
+2. Click the `Preview` button in the editor title bar.
+3. To inspect a Mermaid diagram in a larger view, click the expand button in the diagram's upper-right corner.
 
-プレビューから元のMarkdownへ戻る場合は、プレビュータブ右上の `Markdown` ボタンを押します。
+The expanded view initially fits the diagram to the preview width. Use the `+` / `-` buttons to zoom, and use the `Fit` button to return to fit-to-width. For large diagrams, move around by scrolling, or by dragging with `Cmd` on macOS and `Ctrl` on Windows/Linux.
 
-コマンドパレットから開く場合は、以下でも同じです。
+To return from the preview to the Markdown source, click the `Markdown` button in the preview tab title bar.
+
+You can also use the built-in commands from the command palette:
 
 ```text
 Markdown: Open Preview
 Markdown: Open Preview to the Side
 ```
 
-Mermaidは、通常のMarkdownと同じように fenced code block で書きます。
+Write Mermaid diagrams as fenced code blocks, just like regular Markdown:
 
 ````markdown
 ```mermaid
 flowchart TD
-  A[開始] --> B[処理]
-  B --> C[終了]
+  A[Start] --> B[Process]
+  B --> C[End]
 ```
 ````
 
-## インストール
+## Installation
 
-Marketplaceからインストールできます。
+Install from Visual Studio Marketplace:
 
 [Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=ascreit.vscode-github-markdown-preview)
 
-コマンドパレットからインストールする場合は、`Extensions: Install Extensions` を開いて以下を検索してください。
+To install from the command palette, open `Extensions: Install Extensions` and search for:
 
 ```text
 Ascreit Mermaid Markdown Preview
 ```
 
-拡張IDで検索する場合は以下です。
+You can also search by extension ID:
 
 ```text
 ascreit.vscode-github-markdown-preview
