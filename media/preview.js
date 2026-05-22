@@ -18,7 +18,14 @@
         callback();
     }
     function getMermaidBlocks() {
-        return Array.from(document.querySelectorAll('pre > code.language-mermaid, pre > code.lang-mermaid'));
+        return Array.from(document.querySelectorAll([
+            'pre.github-markdown-preview-mermaid',
+            'pre:has(> code.language-mermaid)',
+            'pre:has(> code.lang-mermaid)',
+        ].join(', ')));
+    }
+    function getMermaidSource(pre) {
+        return (pre.querySelector('code') ?? pre).textContent ?? '';
     }
     function sleep(milliseconds) {
         return new Promise(resolve => {
@@ -71,13 +78,12 @@
             });
             const blocks = getMermaidBlocks();
             for (let index = 0; index < blocks.length; index += 1) {
-                const code = blocks[index];
-                const pre = code.parentElement;
-                if (!pre || pre.getAttribute(renderedAttribute) === 'true') {
+                const pre = blocks[index];
+                if (pre.getAttribute(renderedAttribute) === 'true') {
                     continue;
                 }
                 pre.setAttribute(renderedAttribute, 'true');
-                const source = code.textContent || '';
+                const source = getMermaidSource(pre);
                 const panel = createPanel();
                 pre.replaceWith(panel);
                 try {
@@ -455,16 +461,15 @@
         return button;
     }
     function showLoadErrors(message) {
-        for (const code of getMermaidBlocks()) {
-            const pre = code.parentElement;
-            if (!pre || pre.getAttribute(renderedAttribute) === 'true') {
+        for (const pre of getMermaidBlocks()) {
+            if (pre.getAttribute(renderedAttribute) === 'true') {
                 continue;
             }
             pre.setAttribute(renderedAttribute, 'true');
             const panel = createPanel();
             const viewport = getPanelViewport(panel);
             viewport.classList.add('diagram-error');
-            viewport.textContent = `${message}\n\n${code.textContent || ''}`;
+            viewport.textContent = `${message}\n\n${getMermaidSource(pre)}`;
             pre.replaceWith(panel);
         }
     }

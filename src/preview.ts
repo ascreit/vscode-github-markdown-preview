@@ -57,7 +57,15 @@
   }
 
   function getMermaidBlocks(): HTMLElement[] {
-    return Array.from(document.querySelectorAll('pre > code.language-mermaid, pre > code.lang-mermaid'));
+    return Array.from(document.querySelectorAll([
+      'pre.github-markdown-preview-mermaid',
+      'pre:has(> code.language-mermaid)',
+      'pre:has(> code.lang-mermaid)',
+    ].join(', ')));
+  }
+
+  function getMermaidSource(pre: HTMLElement): string {
+    return (pre.querySelector('code') ?? pre).textContent ?? '';
   }
 
   function sleep(milliseconds: number): Promise<void> {
@@ -121,15 +129,14 @@
       const blocks = getMermaidBlocks();
 
       for (let index = 0; index < blocks.length; index += 1) {
-        const code = blocks[index];
-        const pre = code.parentElement;
+        const pre = blocks[index];
 
-        if (!pre || pre.getAttribute(renderedAttribute) === 'true') {
+        if (pre.getAttribute(renderedAttribute) === 'true') {
           continue;
         }
 
         pre.setAttribute(renderedAttribute, 'true');
-        const source = code.textContent || '';
+        const source = getMermaidSource(pre);
         const panel = createPanel();
         pre.replaceWith(panel);
 
@@ -584,10 +591,8 @@
   }
 
   function showLoadErrors(message: string): void {
-    for (const code of getMermaidBlocks()) {
-      const pre = code.parentElement;
-
-      if (!pre || pre.getAttribute(renderedAttribute) === 'true') {
+    for (const pre of getMermaidBlocks()) {
+      if (pre.getAttribute(renderedAttribute) === 'true') {
         continue;
       }
 
@@ -595,7 +600,7 @@
       const panel = createPanel();
       const viewport = getPanelViewport(panel);
       viewport.classList.add('diagram-error');
-      viewport.textContent = `${message}\n\n${code.textContent || ''}`;
+      viewport.textContent = `${message}\n\n${getMermaidSource(pre)}`;
       pre.replaceWith(panel);
     }
   }

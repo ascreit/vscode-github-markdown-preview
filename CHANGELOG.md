@@ -2,6 +2,13 @@
 
 All notable changes to this extension are documented in this file.
 
+## 1.0.1
+
+- Fixed Mermaid diagrams not rendering when VS Code's built-in Mermaid preview is enabled.
+  This extension now contributes a markdown-it plugin that intercepts Mermaid code fences
+  before the built-in extension can process them, ensuring diagrams are always rendered
+  with this extension's GitHub-style layout and expand/zoom features.
+
 ## 1.0.0
 
 - Stopped the expanded diagram dialog from closing on double-clicks inside the preview.

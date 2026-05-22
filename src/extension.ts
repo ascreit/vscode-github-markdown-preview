@@ -2,11 +2,30 @@ import type * as Vscode from 'vscode';
 
 const vscode: typeof import('vscode') = require('vscode');
 
-export function activate(context: Vscode.ExtensionContext): void {
+export function activate(context: Vscode.ExtensionContext): object {
   context.subscriptions.push(
     vscode.commands.registerCommand('githubMarkdownPreview.showPreview', showPreview),
     vscode.commands.registerCommand('githubMarkdownPreview.showMarkdown', showMarkdown)
   );
+
+  return {
+    extendMarkdownIt(md: any): any {
+      md.core.ruler.push('github-markdown-preview-mermaid', (state: any) => {
+        for (const token of state.tokens) {
+          if (token.type === 'fence' && token.info.trim().split(/\s+/)[0].toLowerCase() === 'mermaid') {
+            token.type = 'github_markdown_preview_mermaid';
+          }
+        }
+      });
+
+      md.renderer.rules['github_markdown_preview_mermaid'] = (tokens: any[], idx: number): string => {
+        const token = tokens[idx];
+        return `<pre class="github-markdown-preview-mermaid">${md.utils.escapeHtml(token.content)}</pre>\n`;
+      };
+
+      return md;
+    }
+  };
 }
 
 async function showPreview(uri?: Vscode.Uri): Promise<void> {
